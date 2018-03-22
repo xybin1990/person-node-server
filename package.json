@@ -1,0 +1,8 @@
+{
+  "name": "my-node-project",
+  "version": "1.0.0",
+  "dependencies": {
+    "express": "^4.16.2",
+    "log4js": "^2.5.3"
+  }
+}
