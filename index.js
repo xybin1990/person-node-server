@@ -41,6 +41,16 @@ app.post('/test', function (req, res) {
 	res.json({test:"test"});
 });
 
+var totalCount = 0;
+var todayCount = 0;
+//网站访问统计statistics
+app.post("/stat",function(req,res){
+	todayCount++;
+	res.json({
+		totalCount: totalCount + todayCount,
+		todayCount: todayCount
+	});
+});
 
 var server = app.listen(3000, function () {
 	var host = server.address().address;
