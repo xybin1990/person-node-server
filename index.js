@@ -1,7 +1,11 @@
 const express = require('express');
 const app = express();
-const log4js = require('log4js');
+// const log4js = require('log4js');
+const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser')
+const path = require('path')
 
+/*
 log4js.configure({
 	appenders: {
 		console: {
@@ -25,34 +29,20 @@ log4js.configure({
 });
 
 var logger = log4js.getLogger('cheese');
+*/
 
-
+app.use(cookieParser())  //处理cookie
+app.use(bodyParser.json());  //解析请求头 加载解析json的中间件
+app.use(bodyParser.urlencoded({ extended: false }));  //加载解析urlencoded请求体的中间件
+app.use(cookieParser());  //加载解析cookie的中间件
 app.use(express.static('dist'));
 
-//日志系统如果放在静态文件之前可以监听到静态文件的请求
-//如果放在静态文件之后，则不会对静态文件的请求打上日志系统
-app.use(log4js.connectLogger(logger, { level: 'info' }));
+
+var routes = require('./routes/index');
+routes(app);
 
 
-
-//API接口返回后台数据
-app.post('/test', function (req, res) {
-	console.log(req);
-	res.json({test:"test"});
-});
-
-var totalCount = 0;
-var todayCount = 0;
-//网站访问统计statistics
-app.post("/stat",function(req,res){
-	todayCount++;
-	res.json({
-		totalCount: totalCount + todayCount,
-		todayCount: todayCount
-	});
-});
-
-var server = app.listen(3000, function () {
+var server = app.listen(3001, function () {
 	var host = server.address().address;
 	var port = server.address().port;
 
