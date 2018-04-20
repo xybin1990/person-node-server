@@ -1,8 +1,8 @@
 module.exports = function (app) {
 
-    app.post("/api/per-app/count", function (req, res) {
+    app.post("/api/count", function (req, res) {
         //
-        console.log(req.body);
+        console.log('/api/count');
         res.json({
             test: '123456'
         });
